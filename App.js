@@ -1,12 +1,134 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import Dashboard from "./Components/pages/dashboard";
+import StudentLIst from "./Components/pages/studentLIst";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import CustomeDrawer from "./Components/CustomeDrawer/CustomeDrawer";
+
+import {
+  Entypo,
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import { SchoolInfoProvider } from "./ContextAPI";
+
+const Stack = createNativeStackNavigator();
+
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigation() {
+  return (
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomeDrawer {...props} />}
+      screenOptions={{
+        headerShown: false,
+        drawerActiveBackgroundColor: "green",
+        drawerActiveTintColor: "#fff",
+        drawerInactiveTintColor: "#333",
+        drawerLabelStyle: {
+          marginLeft: -25,
+        },
+      }}
+    >
+      <Drawer.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="view-dashboard-outline"
+              size={22}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Student"
+        component={StudentLIst}
+        options={{
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account-child-outline"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Subject"
+        component={StudentLIst}
+        options={{
+          drawerIcon: ({ color }) => (
+            <MaterialIcons name="subject" size={24} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Address"
+        component={StudentLIst}
+        options={{
+          drawerIcon: ({ color }) => (
+            <Entypo name="address" size={20} color="black" />
+          ),
+        }}
+      />
+      {/* <Drawer.Screen
+        name="DepartmentTeacher"
+        component={StudentLIst}
+        options={{
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="account-child-outline"
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      /> */}
+      <Drawer.Screen
+        name="Teacher"
+        component={StudentLIst}
+        options={{
+          drawerIcon: ({ color }) => (
+            <FontAwesome5 name="chalkboard-teacher" size={15} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Department"
+        component={StudentLIst}
+        options={{
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="office-building"
+              size={20}
+              color={color}
+            />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>bala prajapati Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SchoolInfoProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Drawer" component={DrawerNavigation} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="studentList" component={StudentLIst} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SchoolInfoProvider>
   );
 }
 
