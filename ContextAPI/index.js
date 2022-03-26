@@ -6,6 +6,16 @@ export class SchoolInfoProvider extends Component {
   state = {
     GlobalCollegeName: "Utkal University",
     LandingImage: [],
+    mode: false,
+  };
+
+  ModeHandler = async () => {
+    const { mode } = this.state;
+
+    this.setState({
+      mode: !mode,
+    });
+    console.log(mode, "mode UI color");
   };
 
   LandingPage = () => {
@@ -32,6 +42,7 @@ export class SchoolInfoProvider extends Component {
       <GlobalSchoolInfo.Provider
         value={{
           ...this.state,
+          ModeHandler: this.ModeHandler,
           LandingPage: this.LandingPage,
         }}
       >

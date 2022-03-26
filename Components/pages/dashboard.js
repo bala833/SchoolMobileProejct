@@ -43,6 +43,7 @@ const Dashboard = ({ navigation }) => {
             //   <Text>{item.img}</Text>
             // </View>
             <Image
+              key={item.id}
               style={{ height: 350, width: 350 }}
               source={{ uri: item.img }}
             />
