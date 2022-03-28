@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Dashboard from "./Components/pages/dashboard";
-import StudentLIst from "./Components/pages/studentLIst";
+import StudentLIstPage from "./Components/pages/studentLIst";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -16,6 +16,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { SchoolInfoProvider } from "./ContextAPI";
+import SubjectLIstPage from "./Components/pages/subjectList";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,7 +51,7 @@ function DrawerNavigation() {
       />
       <Drawer.Screen
         name="Student"
-        component={StudentLIst}
+        component={StudentLIstPage}
         options={{
           drawerIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -63,7 +64,7 @@ function DrawerNavigation() {
       />
       <Drawer.Screen
         name="Subject"
-        component={StudentLIst}
+        component={SubjectLIstPage}
         options={{
           drawerIcon: ({ color }) => (
             <MaterialIcons name="subject" size={24} color={color} />
@@ -72,7 +73,7 @@ function DrawerNavigation() {
       />
       <Drawer.Screen
         name="Address"
-        component={StudentLIst}
+        component={StudentLIstPage}
         options={{
           drawerIcon: ({ color }) => (
             <Entypo name="address" size={20} color="black" />
@@ -81,7 +82,7 @@ function DrawerNavigation() {
       />
       {/* <Drawer.Screen
         name="DepartmentTeacher"
-        component={StudentLIst}
+        component={StudentLIstPage}
         options={{
           drawerIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -94,7 +95,7 @@ function DrawerNavigation() {
       /> */}
       <Drawer.Screen
         name="Teacher"
-        component={StudentLIst}
+        component={StudentLIstPage}
         options={{
           drawerIcon: ({ color }) => (
             <FontAwesome5 name="chalkboard-teacher" size={15} color={color} />
@@ -103,7 +104,7 @@ function DrawerNavigation() {
       />
       <Drawer.Screen
         name="Department"
-        component={StudentLIst}
+        component={StudentLIstPage}
         options={{
           drawerIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -125,7 +126,8 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Drawer" component={DrawerNavigation} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen name="studentList" component={StudentLIst} />
+          <Stack.Screen name="studentList" component={StudentLIstPage} />
+          <Stack.Screen name="SubjectList" component={SubjectLIstPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </SchoolInfoProvider>

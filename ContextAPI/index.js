@@ -7,6 +7,8 @@ export class SchoolInfoProvider extends Component {
     GlobalCollegeName: "Utkal University",
     LandingImage: [],
     mode: false,
+    StudentListData: [],
+    SubjectListData: [],
   };
 
   ModeHandler = async () => {
@@ -37,6 +39,40 @@ export class SchoolInfoProvider extends Component {
       });
   };
 
+  StudentList = () => {
+    axios
+      .get("https://djangoreact.pythonanywhere.com/api/student_detail/")
+      .then((response) => {
+        if (response && response.data) {
+          this.setState({
+            StudentListData: response.data.student_detail,
+          });
+          // console.log(response.data, "in action check data is load or not");
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+      .finally(() => {});
+  };
+
+  GetSubjectList = () => {
+    axios
+      .get("https://djangoreact.pythonanywhere.com/api/subject-api/")
+      .then((response) => {
+        if (response && response.data) {
+          console.log(response.data, "subject list api data ");
+          this.setState({
+            SubjectListData: response.data,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error.message);
+      })
+      .finally(() => {});
+  };
+
   render() {
     return (
       <GlobalSchoolInfo.Provider
@@ -44,6 +80,8 @@ export class SchoolInfoProvider extends Component {
           ...this.state,
           ModeHandler: this.ModeHandler,
           LandingPage: this.LandingPage,
+          StudentList: this.StudentList,
+          GetSubjectList: this.GetSubjectList,
         }}
       >
         {this.props.children}

@@ -11,22 +11,21 @@ import {
 import { GlobalSchoolInfo } from "../../ContextAPI";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
-const StudentLIstPage = ({ navigation }) => {
-  const { StudentList, StudentListData } = useContext(GlobalSchoolInfo);
+const SubjectLIstPage = ({ navigation }) => {
+  const { GetSubjectList, SubjectListData } = useContext(GlobalSchoolInfo);
 
   useEffect(() => {
-    StudentList();
+    GetSubjectList();
   }, []);
 
-  console.log(StudentListData.length, "length of array");
+  console.log(SubjectListData.length, "length of array");
 
   const StudentRender = ({ item }) => (
     <View style={styles.TableWrapper}>
       {/* <Text style={styles.IdWarpper}>{item.id}</Text> */}
-      <Text style={styles.IdWarpper}>{item.first_name}</Text>
-      <Text style={styles.IdWarpper}>{item.last_name}</Text>
-      <Text style={styles.IdWarpper}>{item.surname}</Text>
-      <Text style={styles.IdWarpper}>{item.std}</Text>
+      <Text style={styles.IdWarpper}>{item.publish_date}</Text>
+      <Text style={styles.IdWarpper}>{item.subject}</Text>
+
       <Text style={styles.IdWarpper}>
         <TouchableOpacity>
           <Feather name="edit" size={15} color="green" />
@@ -35,7 +34,6 @@ const StudentLIstPage = ({ navigation }) => {
       <Text style={styles.IdWarpper}>
         <TouchableOpacity>
           <MaterialIcons name="delete-outline" size={20} color="red" />
-          <Text> Student List </Text>
         </TouchableOpacity>
       </Text>
     </View>
@@ -44,10 +42,8 @@ const StudentLIstPage = ({ navigation }) => {
   const renderHeader = () => (
     <View style={styles.TableHeaderWrapper}>
       {/* <Text style={styles.IdWarpper}>Id</Text> */}
-      <Text style={styles.IdWarpper}>First Name</Text>
-      <Text style={styles.IdWarpper}>Last Name</Text>
-      <Text style={styles.IdWarpper}>Surname</Text>
-      <Text style={styles.IdWarpper}>Standard</Text>
+      <Text style={styles.IdWarpper}>Date</Text>
+      <Text style={styles.IdWarpper}>Subject</Text>
       <Text style={styles.IdWarpper}>Edit</Text>
       <Text style={styles.IdWarpper}>Delete</Text>
     </View>
@@ -63,9 +59,9 @@ const StudentLIstPage = ({ navigation }) => {
               <Ionicons name="arrow-back-sharp" size={24} color="black" />
             </View>
           </TouchableOpacity>
-          <Text style={{ color: "#FFF", marginTop: 2, marginLeft: 5 }}>
+          <Text style={{ color: "#FFF", marginTop: 2, marginLeft: 10 }}>
             {" "}
-            Student List{" "}
+            Subject List{" "}
           </Text>
         </View>
         <View></View>
@@ -75,7 +71,7 @@ const StudentLIstPage = ({ navigation }) => {
         <SafeAreaView>
           <FlatList
             contentContainerStyle={{ flexGrow: 1 }}
-            data={StudentListData}
+            data={SubjectListData}
             renderItem={StudentRender}
             keyExtractor={(item) => item.id}
             onEndReachedThreshold={0.2}
@@ -141,4 +137,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-export default StudentLIstPage;
+export default SubjectLIstPage;
