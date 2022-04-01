@@ -73,6 +73,39 @@ export class SchoolInfoProvider extends Component {
       .finally(() => {});
   };
 
+  studentAdd = (data) => {
+    console.log(data, "asdfasdf asdfa sdf as");
+    axios
+      // .post("http://127.0.0.1:8000/api/student_detail/", data)
+      .post("https://djangoreact.pythonanywhere.com/api/student_detail/", data)
+
+      .then((response) => {
+        console.log(response, "subject add api data ");
+        if (response && response.data) {
+          console.log(response.data, "subject add api data ");
+          // history.push("/subject-list");
+        }
+      })
+      .catch((error) => {
+        console.error(error.message);
+      })
+      .finally(() => {});
+  };
+
+  studentDelete = (id) => {
+    const STUDENT_DELETE_URL =
+      "https://djangoreact.pythonanywhere.com/api/student_detail/";
+    axios
+      .delete(`${STUDENT_DELETE_URL}${id}`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      })
+      .finally(() => {});
+  };
+
   render() {
     return (
       <GlobalSchoolInfo.Provider
@@ -82,6 +115,8 @@ export class SchoolInfoProvider extends Component {
           LandingPage: this.LandingPage,
           StudentList: this.StudentList,
           GetSubjectList: this.GetSubjectList,
+          studentAdd: this.studentAdd,
+          studentDelete: this.studentDelete,
         }}
       >
         {this.props.children}

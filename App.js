@@ -17,6 +17,7 @@ import {
 } from "@expo/vector-icons";
 import { SchoolInfoProvider } from "./ContextAPI";
 import SubjectLIstPage from "./Components/pages/subjectList";
+import Studentform from "./Components/pages/studentform";
 
 const Stack = createNativeStackNavigator();
 
@@ -127,6 +128,7 @@ export default function App() {
           <Stack.Screen name="Drawer" component={DrawerNavigation} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="studentList" component={StudentLIstPage} />
+          <Stack.Screen name="SubjectForm" component={Studentform} />
           <Stack.Screen name="SubjectList" component={SubjectLIstPage} />
         </Stack.Navigator>
       </NavigationContainer>

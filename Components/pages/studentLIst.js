@@ -12,30 +12,46 @@ import { GlobalSchoolInfo } from "../../ContextAPI";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const StudentLIstPage = ({ navigation }) => {
-  const { StudentList, StudentListData } = useContext(GlobalSchoolInfo);
+  const { StudentList, StudentListData, studentDelete } =
+    useContext(GlobalSchoolInfo);
 
   useEffect(() => {
     StudentList();
   }, []);
 
-  console.log(StudentListData.length, "length of array");
+  const DeleteHandler = (id) => {
+    studentDelete(id);
+  };
+
+  // console.log(StudentListData.length, "length of array");
 
   const StudentRender = ({ item }) => (
-    <View style={styles.TableWrapper}>
+    <View style={styles.TableWrapper} key={item.id}>
       {/* <Text style={styles.IdWarpper}>{item.id}</Text> */}
       <Text style={styles.IdWarpper}>{item.first_name}</Text>
       <Text style={styles.IdWarpper}>{item.last_name}</Text>
       <Text style={styles.IdWarpper}>{item.surname}</Text>
       <Text style={styles.IdWarpper}>{item.std}</Text>
       <Text style={styles.IdWarpper}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          key={item.id}
+          onPress={() =>
+            navigation.navigate("SubjectForm", {
+              id: item.id,
+              first_name: item.first_name,
+              last_name: item.last_name,
+              surname: item.surname,
+              standard: item.std,
+              isedit: true,
+            })
+          }
+        >
           <Feather name="edit" size={15} color="green" />
         </TouchableOpacity>
       </Text>
       <Text style={styles.IdWarpper}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => DeleteHandler(item.id)}>
           <MaterialIcons name="delete-outline" size={20} color="red" />
-          <Text> Student List </Text>
         </TouchableOpacity>
       </Text>
     </View>
@@ -68,7 +84,31 @@ const StudentLIstPage = ({ navigation }) => {
             Student List{" "}
           </Text>
         </View>
-        <View></View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SubjectForm", { id: 0 })}
+        >
+          <View
+            style={{
+              marginTop: 5,
+              width: 50,
+              height: 25,
+              borderRadius: 5,
+              backgroundColor: "#65C18C",
+            }}
+          >
+            <Text
+              style={{
+                justifyContent: "center",
+                textAlign: "center",
+                marginTop: 2,
+
+                color: "black",
+              }}
+            >
+              Add
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.SubContainerWrapper}>
@@ -98,6 +138,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     backgroundColor: "green",
+    flexDirection: "row",
   },
   Goback: {
     paddingBottom: 10,
