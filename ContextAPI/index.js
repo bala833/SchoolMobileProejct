@@ -93,6 +93,7 @@ export class SchoolInfoProvider extends Component {
   };
 
   studentDelete = (id) => {
+    console.log(id, "delete student record");
     const STUDENT_DELETE_URL =
       "https://djangoreact.pythonanywhere.com/api/student_detail/";
     axios

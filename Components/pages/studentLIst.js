@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
+  Modal,
+  Pressable,
 } from "react-native";
 import { GlobalSchoolInfo } from "../../ContextAPI";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -14,6 +16,9 @@ import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 const StudentLIstPage = ({ navigation }) => {
   const { StudentList, StudentListData, studentDelete } =
     useContext(GlobalSchoolInfo);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalId, SetModalId] = useState("");
+  const [modalFirstName, SetModalFirstName] = useState("");
 
   useEffect(() => {
     StudentList();
@@ -21,6 +26,16 @@ const StudentLIstPage = ({ navigation }) => {
 
   const DeleteHandler = (id) => {
     studentDelete(id);
+  };
+  const ModalDeleteHandle = (id, title) => {
+    setModalVisible(true);
+    SetModalId(id);
+    SetModalFirstName(title);
+  };
+
+  const DeleteModalClose = (id) => {
+    studentDelete(id);
+    setModalVisible(false);
   };
 
   // console.log(StudentListData.length, "length of array");
@@ -50,7 +65,9 @@ const StudentLIstPage = ({ navigation }) => {
         </TouchableOpacity>
       </Text>
       <Text style={styles.IdWarpper}>
-        <TouchableOpacity onPress={() => DeleteHandler(item.id)}>
+        <TouchableOpacity
+          onPress={() => ModalDeleteHandle(item.id, item.first_name)}
+        >
           <MaterialIcons name="delete-outline" size={20} color="red" />
         </TouchableOpacity>
       </Text>
@@ -125,6 +142,43 @@ const StudentLIstPage = ({ navigation }) => {
           {/* <View style={{ flex: 1 }} /> */}
         </SafeAreaView>
       </View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                Are you sure want to delete{" "}
+                <Text style={{ fontStyle: "italic", fontWeight: "bold" }}>
+                  {modalFirstName}
+                </Text>{" "}
+                ?
+              </Text>
+              <View style={styles.ButtonWrapper}>
+                <Pressable
+                  style={[styles.buttonSure]}
+                  onPress={() => DeleteModalClose(modalId)}
+                >
+                  <Text style={styles.textStyle}>Sure Delete</Text>
+                </Pressable>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Cancel</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 };
@@ -152,14 +206,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   TableWrapper: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingVertical: 5,
     flexDirection: "row",
     flexWrap: "wrap",
     borderBottomWidth: 2,
   },
   TableHeaderWrapper: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     paddingBottom: 5,
     flexDirection: "row",
     flexWrap: "wrap",
@@ -180,6 +234,61 @@ const styles = StyleSheet.create({
   },
   FooterText: {
     marginBottom: 20,
+  },
+  // Modal css
+  centeredView: {
+    // flex: 1,
+    alignContent: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    // paddingTop: 22,
+  },
+  modalView: {
+    marginTop: 200,
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "gray",
+  },
+  buttonSure: {
+    marginRight: 20,
+    backgroundColor: "#784",
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  ButtonWrapper: {
+    flexDirection: "row",
   },
 });
 export default StudentLIstPage;

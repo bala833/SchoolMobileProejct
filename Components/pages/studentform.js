@@ -95,10 +95,10 @@ const Studentform = ({ navigation, route }) => {
       </View>
 
       <View>
-        <Text>{first_name + last_name + standard}</Text>
-        <Text>{getDetails("first_name")}</Text>
+        {/* <Text>{first_name + last_name + standard}</Text> */}
+        {/* <Text>{getDetails("first_name")}</Text> */}
 
-        <Text>{std + firstName + lastName}</Text>
+        {/* <Text>{std + firstName + lastName}</Text> */}
 
         <Text
           style={{
@@ -114,75 +114,84 @@ const Studentform = ({ navigation, route }) => {
       </View>
 
       <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <TextInput
-            placeholder="Enter First Name"
-            value={firstName}
-            style={{
-              marginTop: 15,
-              borderWidth: 1,
-              borderColor: "black",
-              width: 250,
-              backgroundColor: "#C1F4C5",
-              color: "black",
-              borderRadius: 3,
-              padding: 3,
-            }}
-            onChangeText={(text) => setFirstName(text)}
-          />
+        <View>
+          <Text style={{ marginLeft: 50 }}>First Name</Text>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TextInput
+              placeholder="Enter First Name"
+              value={firstName}
+              style={{
+                borderWidth: 1,
+                borderColor: "black",
+                width: 250,
+                backgroundColor: "#C1F4C5",
+                color: "black",
+                borderRadius: 3,
+                padding: 3,
+              }}
+              onChangeText={(text) => setFirstName(text)}
+            />
+          </View>
         </View>
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <TextInput
-            placeholder="Enter Last Name"
-            value={lastName}
-            style={{
-              marginTop: 15,
-              borderWidth: 1,
-              borderColor: "black",
-              width: 250,
-              backgroundColor: "#C1F4C5",
-              color: "black",
-              borderRadius: 3,
-              padding: 3,
-            }}
-            onChangeText={(text) => setLastName(text)}
-          />
+
+        <View style={styles.InputLableWrapper}>
+          <Text style={{ marginLeft: 50 }}>Last Name</Text>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TextInput
+              placeholder="Enter Last Name"
+              value={lastName}
+              style={{
+                borderWidth: 1,
+                borderColor: "black",
+                width: 250,
+                backgroundColor: "#C1F4C5",
+                color: "black",
+                borderRadius: 3,
+                padding: 3,
+              }}
+              onChangeText={(text) => setLastName(text)}
+            />
+          </View>
         </View>
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <TextInput
-            placeholder="Surname Name"
-            value={surName}
-            style={{
-              marginTop: 15,
-              borderWidth: 1,
-              borderColor: "black",
-              width: 250,
-              backgroundColor: "#C1F4C5",
-              color: "black",
-              borderRadius: 3,
-              padding: 3,
-            }}
-            onChangeText={(text) => setSurName(text)}
-          />
+        <View style={styles.InputLableWrapper}>
+          <Text style={{ marginLeft: 50 }}>Surname</Text>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TextInput
+              placeholder="Surname Name"
+              value={surName}
+              style={{
+                borderWidth: 1,
+                borderColor: "black",
+                width: 250,
+                backgroundColor: "#C1F4C5",
+                color: "black",
+                borderRadius: 3,
+                padding: 3,
+              }}
+              onChangeText={(text) => setSurName(text)}
+            />
+          </View>
         </View>
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Text>{std}</Text>
-          <TextInput
-            placeholder="Standard"
-            value={std}
-            style={{
-              marginTop: 15,
-              borderWidth: 1,
-              borderColor: "black",
-              width: 250,
-              backgroundColor: "#C1F4C5",
-              color: "black",
-              borderRadius: 3,
-              padding: 3,
-            }}
-            onChangeText={(text) => setStd(text)}
-            keyboardType="number-pad"
-          />
+        <View style={styles.InputLableWrapper}>
+          <Text style={{ marginLeft: 50 }}>Standard</Text>
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            {/* <Text>{std}</Text> */}
+            <TextInput
+              placeholder="Standard"
+              value={std}
+              style={{
+                borderWidth: 1,
+                borderColor: "black",
+                width: 250,
+                backgroundColor: "#C1F4C5",
+                color: "black",
+                borderRadius: 3,
+                padding: 3,
+              }}
+              onChangeText={(text) => setStd(text)}
+              keyboardType="number-pad"
+            />
+          </View>
         </View>
       </View>
 
@@ -258,6 +267,10 @@ const styles = StyleSheet.create({
   },
   BackAndPageName: {
     flexDirection: "row",
+  },
+  InputLableWrapper: {
+    marginTop: 10,
+    fontWeight: "bold",
   },
 });
 

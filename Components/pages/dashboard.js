@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { GlobalSchoolInfo } from "../../ContextAPI";
+// import { DrawerActions } from "react-navigation";
+import { DrawerActions } from "@react-navigation/native";
 
 const Dashboard = ({ navigation }) => {
   const { GlobalCollegeName, LandingPage, LandingImage } =
@@ -22,7 +24,10 @@ const Dashboard = ({ navigation }) => {
         }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity
+            // onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+            onPress={() => navigation.openDrawer()}
+          >
             <View>
               <Feather name="menu" size={24} color="black" />
             </View>
