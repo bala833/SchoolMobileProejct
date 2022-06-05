@@ -9,12 +9,13 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { GlobalSchoolInfo } from "../../ContextAPI";
 import { Feather, Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 const StudentLIstPage = ({ navigation }) => {
-  const { StudentList, StudentListData, studentDelete } =
+  const { StudentList, StudentListData, studentDelete, loading } =
     useContext(GlobalSchoolInfo);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalId, SetModalId] = useState("");
@@ -36,41 +37,43 @@ const StudentLIstPage = ({ navigation }) => {
   const DeleteModalClose = (id) => {
     studentDelete(id);
     setModalVisible(false);
+    // StudentList();
   };
 
   // console.log(StudentListData.length, "length of array");
 
   const StudentRender = ({ item }) => (
-    <View style={styles.TableWrapper} key={item.id}>
-      {/* <Text style={styles.IdWarpper}>{item.id}</Text> */}
-      <Text style={styles.IdWarpper}>{item.first_name}</Text>
-      <Text style={styles.IdWarpper}>{item.last_name}</Text>
-      <Text style={styles.IdWarpper}>{item.surname}</Text>
-      <Text style={styles.IdWarpper}>{item.std}</Text>
-      <Text style={styles.IdWarpper}>
-        <TouchableOpacity
-          key={item.id}
-          onPress={() =>
-            navigation.navigate("SubjectForm", {
-              id: item.id,
-              first_name: item.first_name,
-              last_name: item.last_name,
-              surname: item.surname,
-              standard: item.std,
-              isedit: true,
-            })
-          }
-        >
-          <Feather name="edit" size={15} color="green" />
-        </TouchableOpacity>
-      </Text>
-      <Text style={styles.IdWarpper}>
-        <TouchableOpacity
-          onPress={() => ModalDeleteHandle(item.id, item.first_name)}
-        >
-          <MaterialIcons name="delete-outline" size={20} color="red" />
-        </TouchableOpacity>
-      </Text>
+    <View>
+      <View style={styles.TableWrapper} key={item.id}>
+        <Text style={styles.IdWarpper}>{item.first_name}</Text>
+        <Text style={styles.IdWarpper}>{item.last_name}</Text>
+        <Text style={styles.IdWarpper}>{item.surname}</Text>
+        <Text style={styles.IdWarpper}>{item.std}</Text>
+        <Text style={styles.IdWarpper}>
+          <TouchableOpacity
+            key={item.id}
+            onPress={() =>
+              navigation.navigate("SubjectForm", {
+                id: item.id,
+                first_name: item.first_name,
+                last_name: item.last_name,
+                surname: item.surname,
+                standard: item.std,
+                isedit: true,
+              })
+            }
+          >
+            <Feather name="edit" size={15} color="green" />
+          </TouchableOpacity>
+        </Text>
+        <Text style={styles.IdWarpper}>
+          <TouchableOpacity
+            onPress={() => ModalDeleteHandle(item.id, item.first_name)}
+          >
+            <MaterialIcons name="delete-outline" size={20} color="red" />
+          </TouchableOpacity>
+        </Text>
+      </View>
     </View>
   );
 
@@ -91,7 +94,7 @@ const StudentLIstPage = ({ navigation }) => {
     <View style={styles.ContainWrapper}>
       <View style={styles.GoBackHeaderWrapper}>
         <View style={styles.BackAndPageName}>
-          <TouchableOpacity onPress={() => navigation.navigate("Dashboard")}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <View style={styles.Goback}>
               <Ionicons name="arrow-back-sharp" size={24} color="black" />
             </View>
@@ -129,18 +132,24 @@ const StudentLIstPage = ({ navigation }) => {
       </View>
 
       <View style={styles.SubContainerWrapper}>
-        <SafeAreaView>
-          <FlatList
-            contentContainerStyle={{ flexGrow: 1 }}
-            data={StudentListData}
-            renderItem={StudentRender}
-            keyExtractor={(item) => item.id}
-            onEndReachedThreshold={0.2}
-            ListHeaderComponent={renderHeader}
-            ListFooterComponent={renderFooter}
-          />
-          {/* <View style={{ flex: 1 }} /> */}
-        </SafeAreaView>
+        {loading ? (
+          <View style={styles.Loader}>
+            <ActivityIndicator size="large" color="#00ff00" />
+          </View>
+        ) : (
+          <SafeAreaView>
+            <FlatList
+              contentContainerStyle={{ flexGrow: 1 }}
+              data={StudentListData}
+              renderItem={StudentRender}
+              keyExtractor={(item) => item.id}
+              onEndReachedThreshold={0.2}
+              ListHeaderComponent={renderHeader}
+              ListFooterComponent={renderFooter}
+            />
+            {/* <View style={{ flex: 1 }} /> */}
+          </SafeAreaView>
+        )}
       </View>
       <View style={styles.centeredView}>
         <Modal
@@ -289,6 +298,14 @@ const styles = StyleSheet.create({
   },
   ButtonWrapper: {
     flexDirection: "row",
+  },
+  Loader: {
+    marginTop: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    alignContent: "center",
   },
 });
 export default StudentLIstPage;

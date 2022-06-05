@@ -80,7 +80,7 @@ const Studentform = ({ navigation, route }) => {
       {/* Header Part */}
       <View style={styles.GoBackHeaderWrapper}>
         <View style={styles.BackAndPageName}>
-          <TouchableOpacity onPress={() => navigation.push("studentList")}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <View style={styles.Goback}>
               <Ionicons name="arrow-back-sharp" size={24} color="black" />
             </View>

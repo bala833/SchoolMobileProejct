@@ -1,13 +1,21 @@
 import React, { useContext, useEffect } from "react";
 import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { GlobalSchoolInfo } from "../../ContextAPI";
 // import { DrawerActions } from "react-navigation";
 import { DrawerActions } from "@react-navigation/native";
+import SignInM from "../Common/SignInModal";
 
 const Dashboard = ({ navigation }) => {
-  const { GlobalCollegeName, LandingPage, LandingImage } =
-    useContext(GlobalSchoolInfo);
+  const {
+    GlobalCollegeName,
+    LandingPage,
+    LandingImage,
+    bottomModalFunc,
+    bottomModal,
+    signInToken,
+  } = useContext(GlobalSchoolInfo);
 
   useEffect(() => {
     //   Loading Landing image
@@ -38,7 +46,21 @@ const Dashboard = ({ navigation }) => {
             </Text>
           </View>
         </View>
-        <View></View>
+        <View>
+          {signInToken === null && (
+            <TouchableOpacity
+              // onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+              // onPress={() => navigation.openDrawer()}
+              onPress={() => {
+                bottomModalFunc("signIn");
+              }}
+            >
+              <AntDesign name="user" size={24} color="black" />
+              {/* <Text>{bottomModal}</Text>
+              <Text>{signInToken}</Text> */}
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
 
       <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
@@ -142,6 +164,7 @@ const Dashboard = ({ navigation }) => {
           </View>
         </View>
       </View>
+      <SignInM />
     </View>
   );
 };
